@@ -24,5 +24,11 @@ public class RoleApp {
 	
 	@OneToMany(mappedBy = "roleApp", cascade = CascadeType.ALL)
     List<UserApp> userApp = new ArrayList<>();
+
+	public RoleApp(int id, String nom) {
+		super();
+		this.id = id;
+		this.nom = nom;
+	}
 	
 }

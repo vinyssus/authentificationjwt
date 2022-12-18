@@ -4,14 +4,15 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.spring.securityapi.entity.RoleApp;
 import com.spring.securityapi.entity.UserApp;
 import com.spring.securityapi.repository.RoleAppRepository;
 import com.spring.securityapi.repository.UserAppRepository;
 
-
-public class Impservice implements Service{
+@Service
+public class serviceApp implements IServiceApp{
 
 	@Autowired
 	RoleAppRepository rr;
