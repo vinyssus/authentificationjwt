@@ -50,4 +50,10 @@ public class serviceApp implements IServiceApp{
 		ur.deleteById(id);
 	}
 
+	@Override
+	public UserApp LoadUserByUsername(String username) {
+		// TODO Auto-generated method stub
+		return ur.findByUsername(username);
+	}
+
 }
