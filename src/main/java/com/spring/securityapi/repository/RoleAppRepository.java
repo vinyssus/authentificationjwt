@@ -8,5 +8,4 @@ import com.spring.securityapi.entity.RoleApp;
 @Repository
 public interface RoleAppRepository extends JpaRepository<RoleApp, Integer>{
  
-	RoleApp findByRoleNom(String nom);
 }

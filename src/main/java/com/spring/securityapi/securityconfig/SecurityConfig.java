@@ -7,11 +7,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -39,9 +41,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 				UserApp userApp = serviceapp.LoadUserByUsername(username);
 			    Collection<GrantedAuthority> authorities = new ArrayList<>();
-			   
-				return new User(userApp.getUsername(),userApp.getPassword(),roleApp.getNom());
-			}
+			   userApp.getRoleApp().getNom();
+			   authorities.add(new SimpleGrantedAuthority(userApp.getRoleApp().getNom()));
+				return new User(userApp.getUsername(),userApp.getPassword(),authorities);			}
 		});
 		
 	}
@@ -54,9 +56,10 @@ protected void configure(HttpSecurity http) throws Exception {
 	   http.formLogin();
 	   http.authorizeRequests().anyRequest().authenticated();
 }
-   
+  
+    @Lazy
 	@Bean 
-	PasswordEncoder passwordencoder() {
+	public static PasswordEncoder passwordencoder() {
 		return new BCryptPasswordEncoder();
 		
 	}
