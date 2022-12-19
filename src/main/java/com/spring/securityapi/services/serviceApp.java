@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.securityapi.entity.RoleApp;
 import com.spring.securityapi.entity.UserApp;
@@ -12,6 +14,7 @@ import com.spring.securityapi.repository.RoleAppRepository;
 import com.spring.securityapi.repository.UserAppRepository;
 
 @Service
+@Transactional
 public class serviceApp implements IServiceApp{
 
 	@Autowired
@@ -19,6 +22,8 @@ public class serviceApp implements IServiceApp{
 	
 	@Autowired
 	UserAppRepository ur;
+	
+	@Autowired PasswordEncoder passwordencoder;
 	
 	@Override
 	public List<RoleApp> getListeRole() {
@@ -33,15 +38,17 @@ public class serviceApp implements IServiceApp{
 	}
 
 	@Override
-	public void addRoleApp(RoleApp r) {
+	public RoleApp addRoleApp(RoleApp r) {
 		// TODO Auto-generated method stub
-		rr.save(r);
+		return rr.save(r);
 	}
 
 	@Override
-	public void addUserApp(UserApp u) {
+	public UserApp addUserApp(UserApp u) {
 		// TODO Auto-generated method stub
-		ur.save(u);
+		String pw = u.getPassword();
+		u.setPassword(passwordencoder.encode(pw));
+		return ur.save(u);
 	}
 
 	@Override

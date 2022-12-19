@@ -13,8 +13,8 @@ public interface IServiceApp {
 
 	public List<RoleApp> getListeRole();
 	public List<UserApp> getListeUser();
-	public void addRoleApp(RoleApp r);
-	public void addUserApp(UserApp u);
+    RoleApp addRoleApp(RoleApp r);
+    UserApp addUserApp(UserApp u);
 	public void deleteUser(int id) throws IOException; 
 	public UserApp LoadUserByUsername(String username);
 }
