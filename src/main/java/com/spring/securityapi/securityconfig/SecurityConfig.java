@@ -2,7 +2,6 @@ package com.spring.securityapi.securityconfig;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -30,8 +29,6 @@ import com.spring.securityapi.services.serviceApp;
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 	@Autowired serviceApp serviceapp;
-	
-	@Autowired RoleApp roleApp;
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
