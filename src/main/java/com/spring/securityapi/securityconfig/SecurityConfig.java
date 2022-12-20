@@ -57,8 +57,8 @@ protected void configure(HttpSecurity http) throws Exception {
 	   //http.authorizeHttpRequests().antMatchers("/gestionuser/users/**").permitAll();
 	   http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	   //http.formLogin()
-	   http.authorizeHttpRequests().antMatchers(HttpMethod.POST,"/gestionuser/save/**").hasAnyAuthority("ADMIN");
-	   http.authorizeHttpRequests().antMatchers(HttpMethod.POST,"/gestionuser/users/**").hasAnyAuthority("MANAGER");
+//	   http.authorizeHttpRequests().antMatchers(HttpMethod.POST,"/gestionuser/save/**").hasAnyAuthority("ADMIN");
+//	   http.authorizeHttpRequests().antMatchers(HttpMethod.POST,"/gestionuser/users/**").hasAnyAuthority("MANAGER");
 	   http.authorizeRequests().anyRequest().authenticated();
 	   http.addFilter(new JwtAuthentificationFilter(authenticationManagerBean()));
 	   http.addFilterBefore(new JwtAuthorizationFilter(),UsernamePasswordAuthenticationFilter.class);

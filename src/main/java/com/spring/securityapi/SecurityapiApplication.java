@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
 import com.spring.securityapi.entity.RoleApp;
 import com.spring.securityapi.entity.UserApp;
@@ -13,6 +14,7 @@ import com.spring.securityapi.services.IServiceApp;
 
 
 @SpringBootApplication
+@EnableGlobalMethodSecurity(prePostEnabled = true,securedEnabled = true)
 public class SecurityapiApplication implements CommandLineRunner{
 
 	public static void main(String[] args) {
