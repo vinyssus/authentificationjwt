@@ -2,6 +2,8 @@ package com.spring.securityapi.securityconfig;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.servlet.FilterChain;
@@ -17,6 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JwtAuthentificationFilter extends UsernamePasswordAuthenticationFilter{
 
@@ -49,10 +52,21 @@ public class JwtAuthentificationFilter extends UsernamePasswordAuthenticationFil
 		Algorithm algorithme1 = Algorithm.HMAC256("monsecretVinyssus");
 		String jwtAccessToken = JWT.create()
 				.withSubject(user.getUsername())
-				.withExpiresAt(new Date(System.currentTimeMillis()+5*60*1000))
+				.withExpiresAt(new Date(System.currentTimeMillis()+1*60*1000))
 				.withIssuer(request.getRequestURL().toString())
 				.withClaim("roles", user.getAuthorities().stream().map(ga->ga.getAuthority()).collect(Collectors.toList()))
 				.sign(algorithme1);
-		response.setHeader("Authorization", jwtAccessToken);
+		
+		String jwtRefreshToken = JWT.create()
+				.withSubject(user.getUsername())
+				.withExpiresAt(new Date(System.currentTimeMillis()+15*60*1000))
+				.withIssuer(request.getRequestURL().toString())
+				.sign(algorithme1);
+		Map<String,String> idToken = new HashMap<>();
+		idToken.put("access-token", jwtAccessToken);
+		idToken.put("refresh-token", jwtRefreshToken);
+		response.setContentType("application/json");
+		new ObjectMapper().writeValue(response.getOutputStream(), idToken);
+		//response.setHeader("Authorization", jwtAccessToken);
 	}
 }
