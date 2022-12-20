@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -23,8 +22,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import com.spring.securityapi.entity.RoleApp;
 import com.spring.securityapi.entity.UserApp;
 import com.spring.securityapi.services.serviceApp;
 
@@ -54,7 +51,7 @@ protected void configure(HttpSecurity http) throws Exception {
 	// TODO Auto-generated method stub
 	   http.csrf().disable();
 	//http.authorizeRequests().anyRequest().permitAll();
-	   //http.authorizeHttpRequests().antMatchers("/gestionuser/users/**").permitAll();
+	   http.authorizeHttpRequests().antMatchers("/gestionuser/refreshToken/**").permitAll();
 	   http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	   //http.formLogin()
 //	   http.authorizeHttpRequests().antMatchers(HttpMethod.POST,"/gestionuser/save/**").hasAnyAuthority("ADMIN");
