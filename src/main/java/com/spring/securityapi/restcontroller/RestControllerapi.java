@@ -26,34 +26,35 @@ import com.spring.securityapi.services.serviceApp;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
+@RequestMapping("/gestionusers")
 public class RestControllerapi {
 
 	@Autowired
 	serviceApp sc;
 	
-	@GetMapping("/users")
+	@GetMapping(path="/users")
 	@PostAuthorize("hasAuthority('MANAGER')")
 	List<UserApp> getAllUser(){
 		return sc.getListeUser();
 	}
 	
-	@PostMapping("/saveUser")
+	@PostMapping(path="/saveUser")
 	@PostAuthorize("hasAuthority('ADMIN')")
 	public UserApp saveUser(@RequestBody UserApp u) {
 		return sc.addUserApp(u);	
 	}
 	
 	
-	@PostMapping("/saveRole")
+	@PostMapping(path="/saveRole")
 	public RoleApp saveRole(@RequestBody RoleApp r) {
 		return sc.addRoleApp(r);
 	}
 	
 	@GetMapping(path="/refreshToken")
 	public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws Exception{
-		System.out.println("/gestionuser/refreshToken");
+		System.out.println("/gestionusers/refreshToken");
 		String authToken = request.getHeader("Authorization");
-		if(authToken!=null && authToken.startsWith("Bearer ")) {
+		if(authToken!=null && authToken.startsWith("Bearer ")){
 try {
 				
 				String jwt = authToken.substring(7);
