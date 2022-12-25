@@ -56,7 +56,7 @@ public class RestControllerapi {
 		String authToken = request.getHeader("Authorization");
 		if(authToken!=null && authToken.startsWith("Bearer ")){
 try {
-				
+	            System.out.println("condition validé");
 				String jwt = authToken.substring(7);
 				Algorithm algorithm = Algorithm.HMAC256("monsecretVinyssus");
 				JWTVerifier jwtVerifier = JWT.require(algorithm).build();
