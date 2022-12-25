@@ -26,7 +26,7 @@ import com.spring.securityapi.services.serviceApp;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
-@RequestMapping("/gestionusers")
+@RequestMapping("/gestionuser")
 public class RestControllerapi {
 
 	@Autowired
