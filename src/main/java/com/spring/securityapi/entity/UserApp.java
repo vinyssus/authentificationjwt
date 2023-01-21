@@ -1,11 +1,17 @@
 package com.spring.securityapi.entity;
 
 
+import java.util.ArrayList;
+import java.util.Collection;
+
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
+
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
@@ -22,11 +28,11 @@ public class UserApp {
 	private int id;
 	
 	private String username;
-	
+
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password;
 
+	@ManyToMany(fetch = FetchType.EAGER)
+	Collection<RoleApp> roleApp = new ArrayList<>();
 	
-	@ManyToOne
-	private RoleApp roleApp;
 }

@@ -63,4 +63,12 @@ public class serviceApp implements IServiceApp{
 		return ur.findByUsername(username);
 	}
 
+	@Override
+	public void addRoleToUsers(String username, String roleName) {
+		// TODO Auto-generated method stub
+		UserApp userApp = ur.findByUsername(username);
+		RoleApp roleApp = rr.findByNom(roleName);
+		userApp.getRoleApp().add(roleApp);
+	}
+
 }

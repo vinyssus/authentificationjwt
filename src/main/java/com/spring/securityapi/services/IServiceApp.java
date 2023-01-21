@@ -15,6 +15,7 @@ public interface IServiceApp {
 	public List<UserApp> getListeUser();
     RoleApp addRoleApp(RoleApp r);
     UserApp addUserApp(UserApp u);
+    void addRoleToUsers(String username,String roleName);
 	public void deleteUser(int id) throws IOException; 
 	public UserApp LoadUserByUsername(String username);
 }

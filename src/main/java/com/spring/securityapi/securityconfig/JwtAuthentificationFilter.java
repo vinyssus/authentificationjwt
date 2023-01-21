@@ -26,7 +26,6 @@ public class JwtAuthentificationFilter extends UsernamePasswordAuthenticationFil
 
 	private AuthenticationManager authenticationManager;
 	
-
 	public JwtAuthentificationFilter(AuthenticationManager authenticationManager) {
 		super();
 		this.authenticationManager = authenticationManager;

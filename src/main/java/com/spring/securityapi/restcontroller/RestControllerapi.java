@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -26,7 +28,7 @@ import com.spring.securityapi.services.serviceApp;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
-@RequestMapping("/gestionuser")
+@RequestMapping("/gestionusers")
 public class RestControllerapi {
 
 	@Autowired
@@ -56,7 +58,8 @@ public class RestControllerapi {
 		String authToken = request.getHeader("Authorization");
 		if(authToken!=null && authToken.startsWith("Bearer ")){
 try {
-	            System.out.println("condition validé");
+	            
+	            System.out.println("condition valide");
 				String jwt = authToken.substring(7);
 				Algorithm algorithm = Algorithm.HMAC256("monsecretVinyssus");
 				JWTVerifier jwtVerifier = JWT.require(algorithm).build();
@@ -67,7 +70,7 @@ try {
 						.withSubject(userApp.getUsername())
 						.withExpiresAt(new Date(System.currentTimeMillis()+1*60*1000))
 						.withIssuer(request.getRequestURL().toString())
-						.withClaim("roles", userApp.getRoleApp().getNom())
+						.withClaim("roles", userApp.getRoleApp().stream().map(r->r.getNom()).collect(Collectors.toList()))
 						.sign(algorithm);
 				Map<String,String> idToken = new HashMap<>();
 				idToken.put("access-token", jwtAccessToken);

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -39,9 +40,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 				UserApp userApp = serviceapp.LoadUserByUsername(username);
 			    Collection<GrantedAuthority> authorities = new ArrayList<>();
-			   userApp.getRoleApp().getNom();
-			   authorities.add(new SimpleGrantedAuthority(userApp.getRoleApp().getNom()));
-				return new User(userApp.getUsername(),userApp.getPassword(),authorities);			}
+			    userApp.getRoleApp().forEach(r->{
+			    	authorities.add(new SimpleGrantedAuthority(r.getNom()));
+			    });
+			   
+				return new User(userApp.getUsername(),userApp.getPassword(),authorities);
+				}
 		});
 		
 	}
@@ -50,9 +54,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 protected void configure(HttpSecurity http) throws Exception {
 	// TODO Auto-generated method stub
 	   http.csrf().disable();
-	//http.authorizeRequests().anyRequest().permitAll();
-	   http.authorizeRequests().antMatchers("/gestionusers/refreshToken/**").permitAll();
+	   //http.authorizeRequests().anyRequest().permitAll();
 	   http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+	   http.authorizeRequests().antMatchers("/gestionusers/refreshToken/**").permitAll();
+	  
 	   //http.formLogin()
 //	   http.authorizeHttpRequests().antMatchers(HttpMethod.POST,"/gestionuser/save/**").hasAnyAuthority("ADMIN");
 //	   http.authorizeHttpRequests().antMatchers(HttpMethod.POST,"/gestionuser/users/**").hasAnyAuthority("MANAGER");
